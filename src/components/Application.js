@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
+import axios from "axios";
 
 const appointments = [
   {
@@ -43,24 +44,14 @@ const appointments = [
 ];
 
 export default function Application(props) {
-  const [day, setDay] = useState("Monday");
-  const days = [
-    {
-      id: 1,
-      name: "Monday",
-      spots: 2,
-    },
-    {
-      id: 2,
-      name: "Tuesday",
-      spots: 5,
-    },
-    {
-      id: 3,
-      name: "Wednesday",
-      spots: 0,
-    },
-  ];
+  const [days, setDay] = useState([]);
+
+  useEffect(() => {
+    const URL = "/api/days";
+    axios.get(URL).then((response) => {
+      setDay([...response.data]);
+    });
+  }, []);
 
   const appointmentList = appointments.map((appt) => {
     return <Appointment key={appt.id} {...appt} />;
@@ -76,7 +67,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList days={days} value={day} onChange={setDay} />
+          <DayList days={days} value={days} onChange={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
@@ -87,8 +78,6 @@ export default function Application(props) {
       <section className="schedule">
         {appointmentList}
         <Appointment key="last" time="5pm" />
-
-        {/* Replace this with the schedule elements durint the "The Scheduler" activity. */}
       </section>
     </main>
   );

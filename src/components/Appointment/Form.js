@@ -8,7 +8,7 @@ function Form(props) {
 
   const reset = () => {
     setStudent("");
-    setInterviewer("");
+    setInterviewer(null);
   };
 
   const cancel = () => {
@@ -42,7 +42,7 @@ function Form(props) {
           <Button danger onClick={cancel}>
             Cancel
           </Button>
-          <Button confirm onClick={props.onSave}>
+          <Button confirm onClick={() => props.onSave(student, interviewer)}>
             Save
           </Button>
         </section>
@@ -52,3 +52,5 @@ function Form(props) {
 }
 
 export default Form;
+
+// onClick={() => props.onSave(student, interviewer)}
