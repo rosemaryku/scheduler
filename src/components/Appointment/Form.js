@@ -52,5 +52,3 @@ function Form(props) {
 }
 
 export default Form;
-
-// onClick={() => props.onSave(student, interviewer)}
