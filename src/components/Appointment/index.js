@@ -81,6 +81,10 @@ function Appointment(props) {
         />
       )}
 
+      {mode === PENDING && (
+        <div>Loading...</div>
+      )}
+
       {mode === ERROR_SAVE && (
         <Error message="Appointment could not be created" onClose={back} />
       )}
